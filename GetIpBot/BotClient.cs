@@ -35,11 +35,17 @@ namespace GetIpBot
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var json = JsonDocument.Parse(responseBody);
                 var ip = json.RootElement.GetProperty("ip");
-                string ipString = ip.ToString();
-                Message sentMessage = await client.SendTextMessageAsync(
-                    chatId: chatId,
-                    text: ipString,
-                    cancellationToken: cancellationToken);
+                foreach (var user in Init.UsersList)
+                {
+                    if(user.Id == chatId.ToString())
+                    {
+                        string ipString = ip.ToString();
+                        Message sentMessage = await client.SendTextMessageAsync(
+                            chatId: chatId,
+                            text: ipString,
+                            cancellationToken: cancellationToken);
+                    }
+                }
             }
         }
 
