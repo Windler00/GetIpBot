@@ -1,3 +1,6 @@
 ﻿using GetIpBot;
 
-Init.InitCfg();
+Init.InitConfig();
+Init.InitBotClient();
+
+Console.ReadKey();

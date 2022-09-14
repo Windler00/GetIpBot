@@ -1,6 +1,4 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.Json.Nodes;
 
 namespace GetIpBot
 {
@@ -11,10 +9,15 @@ namespace GetIpBot
         static string dir = Directory.GetCurrentDirectory();
         static string configFile = dir + "\\config.json";
 
-        public static void InitCfg()
+        public static void InitConfig()
         {
             CreateConfig();
             GetConfig();
+        }
+        public static void InitBotClient()
+        {
+            BotClient client = new BotClient();
+            client.StartPooling();
         }
         static void CreateConfig()
         {
@@ -30,7 +33,8 @@ namespace GetIpBot
                 {
                     using (var fs = new FileStream(configFile, FileMode.Create)) 
                     {
-                        JsonSerializer.Serialize(fs, startConfig);
+                        var options = new JsonSerializerOptions { WriteIndented = true };
+                        JsonSerializer.Serialize(fs, startConfig, options);
                     }
                 }
             }
